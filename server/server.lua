@@ -15,24 +15,22 @@ AddEventHandler('qidentification:createCard', function(source,url,type)
 	local card_metadata = {}
 	card_metadata.type = xPlayer.name
 	card_metadata.citizenid = xPlayer[Config.CitizenID]
-	card_metadata.firstName = xPlayer.firstName
-	card_metadata.lastName = xPlayer.lastName
-	card_metadata.dateofbirth = xPlayer.dateofbirth
-	card_metadata.sex = xPlayer.sex
-	card_metadata.height = xPlayer.height
+	card_metadata.firstName = xPlayer.variables.firstName
+	card_metadata.lastName = xPlayer.variables.lastName
+	card_metadata.dateofbirth = xPlayer.variables.dateofbirth
+	card_metadata.sex = xPlayer.variables.sex
+	card_metadata.height = xPlayer.variables.height
 	card_metadata.mugshoturl = url
 	card_metadata.cardtype = type
 	local curtime = os.time(os.date("!*t"))
 	local diftime = curtime + 2629746
 	card_metadata.issuedon = os.date('%m / %d / %Y',curtime)
 	card_metadata.expireson = os.date('%m / %d / %Y', diftime)
-	print("Hello frens")
-	print(type)
 	if type == "identification" then 
 		print("Type is identification")
-		local sex, identifier = xPlayer.sex
+		local sex, identifier = xPlayer.variables.sex
 		if sex == 'm' then sex = 'male' elseif sex == 'f' then sex = 'female' end
-		card_metadata.description = ('Sex: %s | DOB: %s'):format( sex, xPlayer.dateofbirth )
+		card_metadata.description = ('Sex: %s | DOB: %s'):format( sex, xPlayer.variables.dateofbirth )
 	elseif type == "drivers_license" then 
 		MySQL.Async.fetchAll('SELECT type FROM user_licenses WHERE owner = @identifier', {['@identifier'] = xPlayer.identifier},
 		function (licenses)
@@ -58,7 +56,6 @@ end)
 -- Server event to call open identification card on valid players
 RegisterServerEvent('qidentification:server:payForLicense')
 AddEventHandler('qidentification:server:payForLicense', function(identificationData,mugshotURL)
-	print(ESX.DumpTable(identificationData))
 	local xPlayer = ESX.GetPlayerFromId(source)
 	xPlayer.removeMoney(identificationData.cost)
 	TriggerEvent('qidentification:createCard',source,mugshotURL,identificationData.item)
