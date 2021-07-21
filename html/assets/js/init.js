@@ -58,6 +58,7 @@ $(document).ready(function(){
 		}
 	  } else if ( type == 'firearms_license' ) {
 		$('img').show();
+		$('#idnum').text(metadata.citizenid);
 		$('#name').css('color', '#282828');
 		$('#fname').css('color', '#282828');
 		$('img').attr('src', mugshot);
