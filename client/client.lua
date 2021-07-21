@@ -3,10 +3,10 @@ LocalPlayer.state:set('idshown',false,false)
 LocalPlayer.state:set('idvisible',false,false)
 
 -- Register a keymapping for the "stop" command (to close the id)
-RegisterKeyMapping('stop', 'Cancel Action', 'keyboard', 'x')
+RegisterKeyMapping('cancel', 'Cancel Action', 'keyboard', 'x')
 
 -- Register an empty 'stop' command for future use
-RegisterCommand('stop', function()
+RegisterCommand('cancel', function()
 	-- empty the command
 end)
 
@@ -73,13 +73,13 @@ AddEventHandler('qidentification:showUI', function(item)
 		metadata = item.metadata
 	})
 	-- We redefine the stop command to close the NUI
-	RegisterCommand('stop', function()
+	RegisterCommand('cancel', function()
 		SendNUIMessage({
 			action = "close"
 		})
 		LocalPlayer.state:set('idvisible',false,false)
 		-- Once the NUI is closed, we redefine the command to do nothing again, so it can be used by other resources
-		RegisterCommand('stop', function()
+		RegisterCommand('cancel', function()
 			-- empty the command
 		end)
 	end)
