@@ -31,3 +31,39 @@ I've done my best to provide a configurable resource. You are able to add your o
 You'll have to make sure that the list reflects the items that are available for you and your server, along with your own costs.
 
 ## The rest of the config is pretty heavily commented, so it should be self explanatory. 
+
+## linden_inventory/shared/items.lua
+```lua
+	['identification'] = {
+		label = 'Identification',
+		weight = 0,
+		stack = false,
+		close = true,
+		client = {
+			consume = 0,
+			event = true,
+		}
+	},
+
+	['drivers_license'] = {
+		label = 'Drivers License',
+		weight = 0,
+		stack = false,
+		close = true,
+		client = {
+			consume = 0,
+			event = true,
+		}
+	},
+
+	['firearms_license'] = {
+		label = 'Firearms License',
+		weight = 0,
+		stack = false,
+		close = true,
+		client = {
+			consume = 0,
+			event = true,
+		}
+	},
+```
