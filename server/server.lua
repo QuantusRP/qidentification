@@ -1,7 +1,7 @@
 -- Server event to call open identification card on valid players
 RegisterServerEvent('qidentification:server:showID')
 AddEventHandler('qidentification:server:showID', function(item, players)
-	if #players > 0 and item.metadata.isIdentification then 
+	if #players > 0 then 
 		for _,player in pairs(players) do 
 			TriggerClientEvent('qidentification:openID',item)
 		end 
@@ -57,6 +57,9 @@ end)
 RegisterServerEvent('qidentification:server:payForLicense')
 AddEventHandler('qidentification:server:payForLicense', function(identificationData,mugshotURL)
 	local xPlayer = ESX.GetPlayerFromId(source)
+	if xPlayer.getMoney() < identificationData.cost then
+		return xPlayer.showNotification("You can't afford this license.")
+	end
 	xPlayer.removeMoney(identificationData.cost)
 	TriggerEvent('qidentification:createCard',source,mugshotURL,identificationData.item)
 end)
