@@ -1,4 +1,5 @@
 # qIdentification
+# All credits goes to [Noms](https://github.com/OfficialNoms) for creating this script first.
 An identification card resource modified for ox_inventory for ESX Legacy.
 This resource was inspired by the original jsfour identification script and still uses some of the javascript from it. The rest of the LUA is entirely re-written.
 
@@ -65,5 +66,3 @@ You'll have to make sure that the list reflects the items that are available for
 		}
 	},
 ```
-
-# All credits goes to [Noms](https://github.com/OfficialNoms) for creating this script first.
