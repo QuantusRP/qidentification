@@ -10,19 +10,26 @@ RegisterCommand('cancel', function()
 	-- empty the command
 end)
 
--- Direct functionality with linden_inventory
--- Loops through licenses in the table and creates an event for each one
-Citizen.CreateThread(function()
-	for _,licenseData in pairs(Config.IdentificationData) do 
-		AddEventHandler('linden_inventory:'..licenseData.item, function(item, wait, cb)
-			if not LocalPlayer.state.idshown then cb(true) else cb(false) end
-			SetTimeout(wait, function()
-				if not cancelled then
-					TriggerEvent('qidentification:showID',item)
-				end 
-			end) 
-		end)
-	end 
+RegisterNetEvent('qidentification:identification')
+AddEventHandler('qidentification:identification', function()
+	local item = exports.ox_inventory:Items("identification")
+	if item then
+		TriggerEvent('qidentification:showID',item)
+	end
+end)
+RegisterNetEvent('qidentification:drivers_license')
+AddEventHandler('qidentification:drivers_license', function()
+	local item = exports.ox_inventory:Items("drivers_license")
+	if item then
+		TriggerEvent('qidentification:showID',item)
+	end
+end)
+RegisterNetEvent('qidentification:firearms_license')
+AddEventHandler('qidentification:firearms_license', function()
+	local item = exports.ox_inventory:Items("firearms_license")
+	if item then
+		TriggerEvent('qidentification:showID',item)
+	end
 end)
 
 
@@ -33,11 +40,8 @@ AddEventHandler('qidentification:showID', function(item)
 		local playersInArea = ESX.Game.GetPlayersInArea(GetEntityCoords(PlayerPedId()), Config.DistanceShowID)
 		-- loop through players in area and show them the id
 		if #playersInArea > 0 then 
-			if item.metadata.isIsdentification then 
-				
-				TriggerServerEvent('qidentification:server:showID',item,playersInArea)
-				TriggerEvent('qidentification:openID',item)
-			end 
+			TriggerServerEvent('qidentification:server:showID',item,playersInArea)
+			TriggerEvent('qidentification:openID',item)
 		end
 		-- set a flag 
 		LocalPlayer.state:set('idshown',true,false)
@@ -64,25 +68,27 @@ end)
 -- NUI Events 
 -- We define a "stop" command inside this too
 RegisterNetEvent('qidentification:showUI')
-AddEventHandler('qidentification:showUI', function(item)
-	print("Showing id")
+AddEventHandler('qidentification:showUI', function(data)
 	LocalPlayer.state:set('idvisible',true,false)
-	print(ESX.DumpTable(item.metadata))
-	SendNUIMessage({
-		action = "open",
-		metadata = item.metadata
-	})
-	-- We redefine the stop command to close the NUI
-	RegisterCommand('cancel', function()
+	local id = exports.ox_inventory:Search(1, data)
+	for _, v in pairs(id) do
 		SendNUIMessage({
-			action = "close"
+			action = "open",
+			metadata = v.metadata
 		})
-		LocalPlayer.state:set('idvisible',false,false)
-		-- Once the NUI is closed, we redefine the command to do nothing again, so it can be used by other resources
+
 		RegisterCommand('cancel', function()
-			-- empty the command
+			SendNUIMessage({
+				action = "close"
+			})
+			LocalPlayer.state:set('idvisible',false,false)
+			-- Once the NUI is closed, we redefine the command to do nothing again, so it can be used by other resources
+			RegisterCommand('cancel', function()
+				-- empty the command
+			end)
 		end)
-	end)
+	end
+
 end)
 
 -- Backup command to force close any id shown on your screen (in case something breaks)
