@@ -55,8 +55,6 @@ end)
 -- the event that handles applying for license
 RegisterNetEvent('qidentification:applyForLicense')
 AddEventHandler('qidentification:applyForLicense',function(data)
-	-- check if we've got the money in our inventory -- uses linden_inventory CountItems export
-	local moneyCount = exports['linden_inventory']:CountItems(Config.MoneyItem)[Config.MoneyItem]
 	local identificationData = nil
 
 	-- Loop through identificationdata and match item and set a variable for future use
@@ -66,32 +64,7 @@ AddEventHandler('qidentification:applyForLicense',function(data)
 			break
 		end
 	end
-	
-	-- check money vs cost
-	if moneyCount < identificationData.cost then 
-		ESX.ShowNotification("You can't afford this license.")
-	else 
-		mugshotURL = exports['mugshot']:getMugshotUrl(ESX.PlayerData.ped,function(url)
-			local mugshotURL = url
-			-- if you allow custom mugshots, we use nh-keyboard to request the url - only direct image urls will work and it will be resized to fit.
-			if Config.CustomMugshots then 
-				local customMugshot = exports['nh-keyboard']:KeyboardInput({	
-					header = "Custom Mugshot URL (Leave blank for default)",rows = {
-					{
-						id=0,
-						txt="Direct Image URL (imgur,etc)"
-					},
-				}})
-			
-				if customMugshot ~= nil and customMugshot[1].input ~= nil then 
-					mugshotURL = customMugshot[1].input
-				else 
-					-- if no url is defined, it'll just use the mugshot resource to take an automatic one.
-					
-				end 
-			end 
-			TriggerServerEvent('qidentification:server:payForLicense',identificationData,mugshotURL)
-		end)
 
-	end 
+	mugshotURL = exports['MugShotBase64']:GetMugShotBase64(PlayerPedId(),false)
+	TriggerServerEvent('qidentification:server:payForLicense',identificationData,mugshotURL)
 end)
