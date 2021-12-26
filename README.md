@@ -30,7 +30,7 @@ You'll have to make sure that the list reflects the items that are available for
 
 ## The rest of the config is pretty heavily commented, so it should be self explanatory. 
 
-## ox_inventory/shared/items.lua
+## ox_inventory/data/items.lua
 ```lua
 	['identification'] = {
 		label = 'Identification',
