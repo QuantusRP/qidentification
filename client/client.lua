@@ -40,13 +40,13 @@ AddEventHandler('qidentification:showID', function(item)
 		local playersInArea = ESX.Game.GetPlayersInArea(GetEntityCoords(PlayerPedId()), Config.DistanceShowID)
 		-- loop through players in area and show them the id
 		if #playersInArea > 0 then 
-			TriggerServerEvent('qidentification:server:showID',item,playersInArea)
-			TriggerEvent('qidentification:openID',item)
+			TriggerServerEvent('qidentification:server:showID',item.name,playersInArea)
+			TriggerEvent('qidentification:openID',item.name)
 		end
 		-- set a flag 
 		LocalPlayer.state:set('idshown',true,false)
 		-- open it for yourself too
-		TriggerEvent('qidentification:openID',item)
+		TriggerEvent('qidentification:openID',item.name)
 		Citizen.CreateThread(function()
 			-- Fire and forget cooldown
 			Citizen.Wait(Config.ShowIDCooldown * 1000)
