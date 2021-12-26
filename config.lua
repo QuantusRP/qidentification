@@ -5,8 +5,6 @@ Config.DistanceShowID = 2.5
 Config.CitizenID = 'identifier' 
 -- time in SECONDS to enforce a cooldown between attempts to show your ID card to people around you
 Config.ShowIDCooldown = 30 
--- whether or not to allow players to submit their own mugshot urls
-Config.CustomMugshots = true
 -- The item you use for your physical currency
 Config.MoneyItem = 'money' -- or 'cash' or whatever you use
 
