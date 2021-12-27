@@ -65,6 +65,16 @@ AddEventHandler('qidentification:applyForLicense',function(data)
 		end
 	end
 
-	mugshotURL = exports['MugShotBase64']:GetMugShotBase64(PlayerPedId(),false)
+	if Config.CustomMugshots then 
+		local data = exports.ox_inventory:Keyboard('Custom Mugshot URL (Leave blank for default)', {'Direct Image URL (link foto)'})
+	
+		if data then
+			mugshotURL = data[1]
+		else
+			print('No value was entered into the field!')
+		end
+	else
+		local mugshotURL = exports["mugshot"]:GetMugShotBase64(PlayerPedId(), false)
+	end 
 	TriggerServerEvent('qidentification:server:payForLicense',identificationData,mugshotURL)
 end)
