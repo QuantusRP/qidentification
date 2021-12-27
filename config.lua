@@ -7,6 +7,7 @@ Config.CitizenID = 'identifier' -- if you use 'identifier' you can check this li
 Config.ShowIDCooldown = 30 
 -- The item you use for your physical currency
 Config.MoneyItem = 'money' -- or 'cash' or whatever you use
+Config.CustomMugshots = true -- for custom url, you can put your link for img
 
 
 Config.IdentificationData = {
