@@ -74,7 +74,7 @@ AddEventHandler('qidentification:applyForLicense',function(data)
 			print('No value was entered into the field!')
 		end
 	else
-		local mugshotURL = exports["mugshot"]:GetMugShotBase64(PlayerPedId(), false)
+		local mugshotURL = exports[Config.MugshotScriptName]:GetMugShotBase64(PlayerPedId(), false)
 	end 
 	TriggerServerEvent('qidentification:server:payForLicense',identificationData,mugshotURL)
 end)
