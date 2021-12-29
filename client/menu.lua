@@ -10,7 +10,7 @@ AddEventHandler('qidentification:requestLicense',function()
 	local sendMenu = {
 		{
 			id = 1,
-			header = "<h6>Court House</h6>",
+			header = "<h6>Life Invader</h6>",
 			txt = "",
 			params = { 
 				event = "fakeevent",
