@@ -120,3 +120,23 @@ RegisterCommand('issuefirearmslicense', function()
 	end)
 end, false)
 ]]--
+
+if Config.EnableLicenseBlip then
+    Citizen.CreateThread(function()
+		for k,v in pairs(Config.LicenseLocation) do
+			for i = 1, #v.LicenseLocation, 1 do
+				local blip = AddBlipForCoord(v.LicenseLocation[i])
+				
+				SetBlipSprite (blip, 483)
+				SetBlipDisplay(blip, 4)
+				SetBlipScale  (blip, 0.8)
+				SetBlipColour (blip, 17)
+				SetBlipAsShortRange(blip, true)
+				
+				BeginTextCommandSetBlipName('STRING')
+				AddTextComponentSubstringPlayerName(Config.LicenseBlipName)
+				EndTextCommandSetBlipName(blip)
+			end
+		end
+	end)
+end
