@@ -9,6 +9,8 @@ Config.ShowIDCooldown = 30
 Config.MoneyItem = 'money' -- or 'cash' or whatever you use
 Config.CustomMugshots = true -- for custom url, you can put your link for img
 
+Config.MugshotScriptName = "MugShotBase64"
+
 
 Config.IdentificationData = {
 	{
