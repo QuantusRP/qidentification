@@ -14,7 +14,7 @@ These are required resources that this resource was built around. It's not desig
 ## Soft Dependencies
 By default this resource needs these resources, however the core functionality (creating identification cards, metadata, showing identification cards) will still work if you remove the appropriate code in peds.lua and menu.lua
 * [qtarget](https://github.com/overextended/qtarget)
-* [nh-context](https://github.com/nerohiro/nh-context)
+* [nh-context](https://github.com/LukeWasTakenn/nh-context)
 
 # Installation
 1. Drag and drop into your resource folder
