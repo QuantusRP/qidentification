@@ -14,7 +14,7 @@ AddEventHandler('qidentification:createCard', function(source,url,type)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local card_metadata = {}
 	card_metadata.type = xPlayer.name
-	card_metadata.citizenid = xPlayer[Config.CitizenID]
+	card_metadata.citizenid = xPlayer[Config.CitizenID]:sub(-5)
 	card_metadata.firstName = xPlayer.variables.firstName
 	card_metadata.lastName = xPlayer.variables.lastName
 	card_metadata.dateofbirth = xPlayer.variables.dateofbirth
