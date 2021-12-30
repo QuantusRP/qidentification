@@ -45,8 +45,20 @@ Config.GenderNumbers = {
 Config.NPCList = {
 	{
 		model = `cs_movpremmale`,
-		coords = vector4(-549.6633, -189.9325, 38.2231, 193.0565), 
+		coords = vector4(-1078.59, -245.93, 37.76, 160.88), 
 		gender = 'male',
 		role = 'license',
 	}
+}
+
+Config.EnableLicenseBlip = true
+Config.LicenseBlipName = "License Issuer"
+
+--Coordinates for License Issuer
+Config.LicenseLocation = {
+    Loc = {
+        LicenseLocation = {
+            vector3(-1078.59, -245.93, 37.76)
+        }
+    }
 }
