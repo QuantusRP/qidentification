@@ -40,6 +40,8 @@ AddEventHandler('qidentification:createCard', function(source,url,type)
 				end
 			end
 		end)
+			TriggerEvent('esx_license:addLicense', source, 'drive', function()
+			end)
 	elseif type == "firearms_license" then 
 		MySQL.Async.fetchAll('SELECT type FROM user_licenses WHERE owner = @identifier', {['@identifier'] = xPlayer.identifier},
 		function (licenses)
@@ -48,6 +50,8 @@ AddEventHandler('qidentification:createCard', function(source,url,type)
 					card_metadata.licenses = licenses
 				end
 			end
+		end)
+		TriggerEvent('esx_license:addLicense', source, 'weapon', function()
 		end)
 	end
 	xPlayer.addInventoryItem(type, 1, card_metadata)
