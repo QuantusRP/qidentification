@@ -38,31 +38,28 @@ You'll have to make sure that the list reflects the items that are available for
 		weight = 0,
 		stack = false,
 		close = true,
+		limit = 3,
 		client = {
-			consume = 0,
-			event = "qidentification:identification",
+			export = 'qidentification.identification'
 		}
 	},
-
 	['drivers_license'] = {
 		label = 'Drivers License',
 		weight = 0,
 		stack = false,
 		close = true,
+		consume = 0,
 		client = {
-			consume = 0,
-			event = "qidentification:drivers_license",
+			export = 'qidentification.identification'
 		}
 	},
-
 	['firearms_license'] = {
 		label = 'Firearms License',
 		weight = 0,
 		stack = false,
 		close = true,
 		client = {
-			consume = 0,
-			event = "qidentification:firearms_license",
+			export = 'qidentification.identification'
 		}
 	},
 ```
