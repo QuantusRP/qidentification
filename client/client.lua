@@ -10,25 +10,16 @@ RegisterCommand('cancel', function()
 	-- empty the command
 end)
 
-RegisterNetEvent('qidentification:identification')
-AddEventHandler('qidentification:identification', function()
-	local item = exports.ox_inventory:Items("identification")
-	if item then
-		TriggerEvent('qidentification:showID',item)
-	end
-end)
-RegisterNetEvent('qidentification:drivers_license')
-AddEventHandler('qidentification:drivers_license', function()
-	local item = exports.ox_inventory:Items("drivers_license")
-	if item then
-		TriggerEvent('qidentification:showID',item)
-	end
-end)
-RegisterNetEvent('qidentification:firearms_license')
-AddEventHandler('qidentification:firearms_license', function()
-	local item = exports.ox_inventory:Items("firearms_license")
-	if item then
-		TriggerEvent('qidentification:showID',item)
+local ox_inventory = exports.ox_inventory
+exports('identification', function(data, slot)
+	if not LocalPlayer.state.idshown  then 
+		ox_inventory:useItem(data, function(data)
+			if data then
+				TriggerEvent('qidentification:showID',data)
+			end
+		end)
+	else
+		ox_inventory:notify({text = 'License is in cooldown.'})
 	end
 end)
 
