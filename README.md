@@ -38,7 +38,6 @@ You'll have to make sure that the list reflects the items that are available for
 		weight = 0,
 		stack = false,
 		close = true,
-		limit = 3,
 		client = {
 			export = 'qidentification.identification'
 		}
