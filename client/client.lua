@@ -65,25 +65,20 @@ end)
 RegisterNetEvent('qidentification:showUI')
 AddEventHandler('qidentification:showUI', function(data)
 	LocalPlayer.state:set('idvisible',true,false)
-	local id = exports.ox_inventory:Search(1, data)
-	for _, v in pairs(id) do
+	SendNUIMessage({
+		action = "open",
+		metadata = data.metadata
+	})
+	RegisterCommand('cancel', function()
 		SendNUIMessage({
-			action = "open",
-			metadata = v.metadata
+			action = "close"
 		})
-
+		LocalPlayer.state:set('idvisible',false,false)
+		-- Once the NUI is closed, we redefine the command to do nothing again, so it can be used by other resources
 		RegisterCommand('cancel', function()
-			SendNUIMessage({
-				action = "close"
-			})
-			LocalPlayer.state:set('idvisible',false,false)
-			-- Once the NUI is closed, we redefine the command to do nothing again, so it can be used by other resources
-			RegisterCommand('cancel', function()
-				-- empty the command
-			end)
+			-- empty the command
 		end)
-	end
-
+	end)
 end)
 
 -- Backup command to force close any id shown on your screen (in case something breaks)
