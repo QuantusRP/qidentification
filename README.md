@@ -11,6 +11,8 @@ These are required resources that this resource was built around. It's not desig
 * [ESX Legacy](https://github.com/overextended/es_extended)
 * [ox_inventory](https://github.com/overextended/ox_inventory)
 * [MugShotBase64](https://github.com/BaziForYou/MugShotBase64)
+or
+* [mugshot](https://github.com/jonassvensson4/mugshot)
 ## Soft Dependencies
 By default this resource needs these resources, however the core functionality (creating identification cards, metadata, showing identification cards) will still work if you remove the appropriate code in peds.lua and menu.lua
 * [qtarget](https://github.com/overextended/qtarget)
