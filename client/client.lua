@@ -31,13 +31,17 @@ AddEventHandler('qidentification:showID', function(item)
 		local playersInArea = ESX.Game.GetPlayersInArea(GetEntityCoords(PlayerPedId()), Config.DistanceShowID)
 		-- loop through players in area and show them the id
 		if #playersInArea > 0 then 
-			TriggerServerEvent('qidentification:server:showID',item.name,playersInArea)
-			TriggerEvent('qidentification:openID',item.name)
+			local Playerinareaid = {} -- Probably a better way of doing this, feel free to fix this :) -PERPGamer
+			for i = 1, #playersInArea do
+				table.insert(Playerinareaid, GetPlayerServerId(playersInArea[i]))
+			end
+			TriggerServerEvent('qidentification:server:showID',item,Playerinareaid)
+			TriggerEvent('qidentification:openID',item)
 		end
 		-- set a flag 
 		LocalPlayer.state:set('idshown',true,false)
 		-- open it for yourself too
-		TriggerEvent('qidentification:openID',item.name)
+		TriggerEvent('qidentification:openID',item)
 		Citizen.CreateThread(function()
 			-- Fire and forget cooldown
 			Citizen.Wait(Config.ShowIDCooldown * 1000)
