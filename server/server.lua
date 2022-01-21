@@ -3,7 +3,7 @@ RegisterServerEvent('qidentification:server:showID')
 AddEventHandler('qidentification:server:showID', function(item, players)
 	if #players > 0 then 
 		for _,player in pairs(players) do 
-			TriggerClientEvent('qidentification:openID',item)
+			TriggerClientEvent('qidentification:openID', player, item)
 		end 
 	end 
 end)
