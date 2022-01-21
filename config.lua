@@ -11,7 +11,7 @@ Config.CustomMugshots = true -- for custom url, you can put your link for img
 
 Config.MugshotScriptName = "MugShotBase64" -- mugshot or MugShotBase64
 
-Config.MugshotsBase64 = false -- Set this to true for MugShotBase64 or false for normal mugshot
+Config.MugshotsBase64 = true -- Set this to true for MugShotBase64 or false for normal mugshot
 
 
 Config.IdentificationData = {
