@@ -42,7 +42,8 @@ You'll have to make sure that the list reflects the items that are available for
 		close = true,
 		consume = 0,
 		client = {
-			export = 'qidentification.identification'
+			export = "qidentification.Showdrivers_license"
+
 		}
 	},
 	['drivers_license'] = {
@@ -52,7 +53,11 @@ You'll have to make sure that the list reflects the items that are available for
 		close = true,
 		consume = 0,
 		client = {
-			export = 'qidentification.identification'
+
+
+
+			export = "qidentification.Showfirearms_license"
+
 		}
 	},
 	['firearms_license'] = {
@@ -62,7 +67,10 @@ You'll have to make sure that the list reflects the items that are available for
 		close = true,
 		consume = 0,
 		client = {
-			export = 'qidentification.identification'
+
+
+			export = "qidentification.useCertificat"
+
 		}
 	},
 ```
