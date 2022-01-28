@@ -38,9 +38,9 @@ You'll have to make sure that the list reflects the items that are available for
 		weight = 0,
 		stack = false,
 		close = true,
+		consume = 0,
 		client = {
-			consume = 0,
-			event = "qidentification:identification",
+			export = "qidentification.Showdrivers_license"
 		}
 	},
 
@@ -49,9 +49,9 @@ You'll have to make sure that the list reflects the items that are available for
 		weight = 0,
 		stack = false,
 		close = true,
+		consume = 0,
 		client = {
-			consume = 0,
-			event = "qidentification:drivers_license",
+			export = "qidentification.Showfirearms_license"
 		}
 	},
 
@@ -60,9 +60,9 @@ You'll have to make sure that the list reflects the items that are available for
 		weight = 0,
 		stack = false,
 		close = true,
+		consume = 0,
 		client = {
-			consume = 0,
-			event = "qidentification:firearms_license",
+			export = "qidentification.useCertificat"
 		}
 	},
 ```
