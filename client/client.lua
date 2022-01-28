@@ -10,28 +10,36 @@ RegisterCommand('cancel', function()
 	-- empty the command
 end)
 
-RegisterNetEvent('qidentification:identification')
-AddEventHandler('qidentification:identification', function()
-	local item = exports.ox_inventory:Items("identification")
-	if item then
-		TriggerEvent('qidentification:showID',item)
-	end
+exports('Showidentification',function (data,slot)
+    exports.ox_inventory:useItem(data, function(data)
+        if data then
+            local item = exports.ox_inventory:Items("identification")
+			if item then
+				TriggerEvent('qidentification:showID',item)
+			end
+        end
+    end)
 end)
-RegisterNetEvent('qidentification:drivers_license')
-AddEventHandler('qidentification:drivers_license', function()
-	local item = exports.ox_inventory:Items("drivers_license")
-	if item then
-		TriggerEvent('qidentification:showID',item)
-	end
+exports('Showdrivers_license',function (data,slot)
+    exports.ox_inventory:useItem(data, function(data)
+        if data then
+            local item = exports.ox_inventory:Items("drivers_license")
+			if item then
+				TriggerEvent('qidentification:showID',item)
+			end
+        end
+    end)
 end)
-RegisterNetEvent('qidentification:firearms_license')
-AddEventHandler('qidentification:firearms_license', function()
-	local item = exports.ox_inventory:Items("firearms_license")
-	if item then
-		TriggerEvent('qidentification:showID',item)
-	end
+exports('Showfirearms_license',function (data,slot)
+    exports.ox_inventory:useItem(data, function(data)
+        if data then
+            local item = exports.ox_inventory:Items("firearms_license")
+			if item then
+				TriggerEvent('qidentification:showID',item)
+			end
+        end
+    end)
 end)
-
 
 -- Event to show your ID to nearby players
 RegisterNetEvent('qidentification:showID')
