@@ -56,6 +56,7 @@ end)
 RegisterNetEvent('qidentification:applyForLicense')
 AddEventHandler('qidentification:applyForLicense',function(data)
 	local identificationData = nil
+	local mugshotURL = nil
 
 	-- Loop through identificationdata and match item and set a variable for future use
 	for k,v in pairs(Config.IdentificationData) do 
@@ -74,7 +75,16 @@ AddEventHandler('qidentification:applyForLicense',function(data)
 			print('No value was entered into the field!')
 		end
 	else
-		local mugshotURL = exports[Config.MugshotScriptName]:GetMugShotBase64(PlayerPedId(), false)
+		if Config.MugshotsBase64 then
+			mugshotURL = exports[Config.MugshotScriptName]:GetMugShotBase64(PlayerPedId(), false)
+		else
+			local p = promise.new() -- Make sure we wait for the mugshot is created
+			exports[Config.MugshotScriptName]:getMugshotUrl(PlayerPedId(), function(url)
+				mugshotURL = url
+				p:resolve()
+			end)
+			Citizen.Await(p)		
+		end
 	end 
 	TriggerServerEvent('qidentification:server:payForLicense',identificationData,mugshotURL)
 end)
