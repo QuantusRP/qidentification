@@ -12,7 +12,7 @@ ui_page 'html/index.html'
 
 dependencies {
 	'es_extended',
-	'ghmattimysql'
+	'oxmysql'
 }
 
 shared_scripts {
