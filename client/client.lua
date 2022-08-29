@@ -22,6 +22,7 @@ exports('identification', function(data, slot)
 	else
 		ox_inventory:notify({text = 'License is in cooldown.'})
 	end
+end)
 
 exports('Showidentification',function (data,slot)
     exports.ox_inventory:useItem(data, function(data)
@@ -33,6 +34,7 @@ exports('Showidentification',function (data,slot)
         end
     end)
 end)
+
 exports('Showdrivers_license',function (data,slot)
     exports.ox_inventory:useItem(data, function(data)
         if data then
@@ -43,6 +45,7 @@ exports('Showdrivers_license',function (data,slot)
         end
     end)
 end)
+
 exports('Showfirearms_license',function (data,slot)
     exports.ox_inventory:useItem(data, function(data)
         if data then
