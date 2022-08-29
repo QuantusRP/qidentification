@@ -1,5 +1,6 @@
 # qIdentification
-An identification card resource created for use with linden_inventory for ESX Legacy.
+# All credits goes to [Noms](https://github.com/OfficialNoms) for creating this script first.
+An identification card resource modified for ox_inventory for ESX Legacy.
 This resource was inspired by the original jsfour identification script and still uses some of the javascript from it. The rest of the LUA is entirely re-written.
 
 ![ID Card Preview](https://i.imgur.com/PxVi8jK.png)
@@ -7,15 +8,15 @@ This resource was inspired by the original jsfour identification script and stil
 # Dependencies
 ## Hard Dependencies
 These are required resources that this resource was built around. It's not designed to work without these resources and if you want to remove the requirement for them you'll be better off writing your own resource rather than try to remove those dependencies from this resource. 
-* [ESX Legacy](https://github.com/esx-framework/es_extended)
-* [linden_inventory](https://github.com/thelindat/linden_inventory)
-* [screenshot-basic](https://github.com/jonassvensson4/screenshot-basic)
+* [ESX Legacy](https://github.com/overextended/es_extended)
+* [ox_inventory](https://github.com/overextended/ox_inventory)
+* [MugShotBase64](https://github.com/BaziForYou/MugShotBase64)
+or
 * [mugshot](https://github.com/jonassvensson4/mugshot)
 ## Soft Dependencies
 By default this resource needs these resources, however the core functionality (creating identification cards, metadata, showing identification cards) will still work if you remove the appropriate code in peds.lua and menu.lua
-* [qtarget](https://github.com/QuantusRP/qtarget)
-* [nh-context](https://github.com/nerohiro/nh-context)
-* [nh-keyboard](https://github.com/nerohiro/nh-keyboard)
+* [qtarget](https://github.com/overextended/qtarget)
+* [nh-context](https://github.com/LukeWasTakenn/nh-context)
 
 # Installation
 1. Drag and drop into your resource folder
@@ -32,38 +33,44 @@ You'll have to make sure that the list reflects the items that are available for
 
 ## The rest of the config is pretty heavily commented, so it should be self explanatory. 
 
-## linden_inventory/shared/items.lua
+## ox_inventory/data/items.lua
 ```lua
 	['identification'] = {
 		label = 'Identification',
 		weight = 0,
 		stack = false,
 		close = true,
+		consume = 0,
 		client = {
-			consume = 0,
-			event = true,
+			export = "qidentification.Showidentification"
+
 		}
 	},
-
 	['drivers_license'] = {
 		label = 'Drivers License',
 		weight = 0,
 		stack = false,
 		close = true,
+		consume = 0,
 		client = {
-			consume = 0,
-			event = true,
+
+
+
+			export = "qidentification.Showdrivers_license"
+
 		}
 	},
-
 	['firearms_license'] = {
 		label = 'Firearms License',
 		weight = 0,
 		stack = false,
 		close = true,
+		consume = 0,
 		client = {
-			consume = 0,
-			event = true,
+
+
+			export = "qidentification.Showfirearms_license"
+
 		}
 	},
 ```

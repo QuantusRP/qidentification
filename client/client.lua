@@ -10,21 +10,53 @@ RegisterCommand('cancel', function()
 	-- empty the command
 end)
 
--- Direct functionality with linden_inventory
--- Loops through licenses in the table and creates an event for each one
-Citizen.CreateThread(function()
-	for _,licenseData in pairs(Config.IdentificationData) do 
-		AddEventHandler('linden_inventory:'..licenseData.item, function(item, wait, cb)
-			if not LocalPlayer.state.idshown then cb(true) else cb(false) end
-			SetTimeout(wait, function()
-				if not cancelled then
-					TriggerEvent('qidentification:showID',item)
-				end 
-			end) 
+
+local ox_inventory = exports.ox_inventory
+exports('identification', function(data, slot)
+	if not LocalPlayer.state.idshown  then 
+		ox_inventory:useItem(data, function(data)
+			if data then
+				TriggerEvent('qidentification:showID',data)
+			end
 		end)
-	end 
+	else
+		ox_inventory:notify({text = 'License is in cooldown.'})
+	end
 end)
 
+exports('Showidentification',function (data,slot)
+    exports.ox_inventory:useItem(data, function(data)
+        if data then
+            local item = exports.ox_inventory:Items("identification")
+			if item then
+				TriggerEvent('qidentification:showID',item)
+			end
+        end
+    end)
+end)
+
+exports('Showdrivers_license',function (data,slot)
+    exports.ox_inventory:useItem(data, function(data)
+        if data then
+            local item = exports.ox_inventory:Items("drivers_license")
+			if item then
+				TriggerEvent('qidentification:showID',item)
+			end
+        end
+    end)
+end)
+
+exports('Showfirearms_license',function (data,slot)
+    exports.ox_inventory:useItem(data, function(data)
+        if data then
+            local item = exports.ox_inventory:Items("firearms_license")
+			if item then
+				TriggerEvent('qidentification:showID',item)
+			end
+        end
+    end)
+
+end)
 
 -- Event to show your ID to nearby players
 RegisterNetEvent('qidentification:showID')
@@ -33,11 +65,12 @@ AddEventHandler('qidentification:showID', function(item)
 		local playersInArea = ESX.Game.GetPlayersInArea(GetEntityCoords(PlayerPedId()), Config.DistanceShowID)
 		-- loop through players in area and show them the id
 		if #playersInArea > 0 then 
-			if item.metadata.isIsdentification then 
-				
-				TriggerServerEvent('qidentification:server:showID',item,playersInArea)
-				TriggerEvent('qidentification:openID',item)
-			end 
+			local Playerinareaid = {} -- Probably a better way of doing this, feel free to fix this :) -PERPGamer
+			for i = 1, #playersInArea do
+				table.insert(Playerinareaid, GetPlayerServerId(playersInArea[i]))
+			end
+			TriggerServerEvent('qidentification:server:showID',item,Playerinareaid)
+			TriggerEvent('qidentification:openID',item)
 		end
 		-- set a flag 
 		LocalPlayer.state:set('idshown',true,false)
@@ -64,15 +97,12 @@ end)
 -- NUI Events 
 -- We define a "stop" command inside this too
 RegisterNetEvent('qidentification:showUI')
-AddEventHandler('qidentification:showUI', function(item)
-	print("Showing id")
+AddEventHandler('qidentification:showUI', function(data)
 	LocalPlayer.state:set('idvisible',true,false)
-	print(ESX.DumpTable(item.metadata))
 	SendNUIMessage({
 		action = "open",
-		metadata = item.metadata
+		metadata = data.metadata
 	})
-	-- We redefine the stop command to close the NUI
 	RegisterCommand('cancel', function()
 		SendNUIMessage({
 			action = "close"
@@ -114,3 +144,23 @@ RegisterCommand('issuefirearmslicense', function()
 	end)
 end, false)
 ]]--
+
+if Config.EnableLicenseBlip then
+    Citizen.CreateThread(function()
+		for k,v in pairs(Config.LicenseLocation) do
+			for i = 1, #v.LicenseLocation, 1 do
+				local blip = AddBlipForCoord(v.LicenseLocation[i])
+				
+				SetBlipSprite (blip, 483)
+				SetBlipDisplay(blip, 4)
+				SetBlipScale  (blip, 0.8)
+				SetBlipColour (blip, 17)
+				SetBlipAsShortRange(blip, true)
+				
+				BeginTextCommandSetBlipName('STRING')
+				AddTextComponentSubstringPlayerName(Config.LicenseBlipName)
+				EndTextCommandSetBlipName(blip)
+			end
+		end
+	end)
+end

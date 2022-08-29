@@ -1,9 +1,9 @@
 -- Server event to call open identification card on valid players
 RegisterServerEvent('qidentification:server:showID')
 AddEventHandler('qidentification:server:showID', function(item, players)
-	if #players > 0 and item.metadata.isIdentification then 
+	if #players > 0 then 
 		for _,player in pairs(players) do 
-			TriggerClientEvent('qidentification:openID',item)
+			TriggerClientEvent('qidentification:openID', player, item)
 		end 
 	end 
 end)
@@ -14,7 +14,7 @@ AddEventHandler('qidentification:createCard', function(source,url,type)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local card_metadata = {}
 	card_metadata.type = xPlayer.name
-	card_metadata.citizenid = xPlayer[Config.CitizenID]
+	card_metadata.citizenid = xPlayer[Config.CitizenID]:sub(-5)
 	card_metadata.firstName = xPlayer.variables.firstName
 	card_metadata.lastName = xPlayer.variables.lastName
 	card_metadata.dateofbirth = xPlayer.variables.dateofbirth
@@ -40,6 +40,8 @@ AddEventHandler('qidentification:createCard', function(source,url,type)
 				end
 			end
 		end)
+		TriggerEvent('esx_license:addLicense', source, 'drive', function()
+		end)
 	elseif type == "firearms_license" then 
 		MySQL.Async.fetchAll('SELECT type FROM user_licenses WHERE owner = @identifier', {['@identifier'] = xPlayer.identifier},
 		function (licenses)
@@ -49,6 +51,8 @@ AddEventHandler('qidentification:createCard', function(source,url,type)
 				end
 			end
 		end)
+			TriggerEvent('esx_license:addLicense', source, 'weapon', function()
+			end)
 	end
 	xPlayer.addInventoryItem(type, 1, card_metadata)
 end)
@@ -56,7 +60,11 @@ end)
 -- Server event to call open identification card on valid players
 RegisterServerEvent('qidentification:server:payForLicense')
 AddEventHandler('qidentification:server:payForLicense', function(identificationData,mugshotURL)
-	local xPlayer = ESX.GetPlayerFromId(source)
+	local _source = source
+	local xPlayer = ESX.GetPlayerFromId(_source)
+	if xPlayer.getMoney() < identificationData.cost then
+		return xPlayer.showNotification("You can't afford this license.")
+	end
 	xPlayer.removeMoney(identificationData.cost)
-	TriggerEvent('qidentification:createCard',source,mugshotURL,identificationData.item)
+	TriggerEvent('qidentification:createCard',_source,mugshotURL,identificationData.item)
 end)
